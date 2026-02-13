@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "WhatsApp Direct Sender",
+  "description": "Send WhatsApp message without saving contact",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": []
+}
+
