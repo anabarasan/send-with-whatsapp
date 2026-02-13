@@ -1,8 +1,14 @@
 #!/bin/bash
 
-rm -f send-with-whatsapp.zip
+# Delete any existing previous extension archive files
+rm -f send-with-whatsapp-v*.zip
 
-zip -r send-with-whatsapp.zip \
+# Extract version from manifest.json
+VERSION=$(grep '"version"' manifest.json | head -1 | sed -E 's/.*"version": *"([^"]+)".*/\1/')
+
+ZIP_NAME="send-with-whatsapp-v${VERSION}.zip"
+
+zip -r "${ZIP_NAME}" \
   LICENSE \
   popup.js \
   manifest.json \
@@ -13,5 +19,5 @@ zip -r send-with-whatsapp.zip \
   popup.html \
   README.md
 
-echo "Build Complete"
+echo "Build Complete ${ZIP_NAME}"
 
