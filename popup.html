@@ -1,41 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>WhatsApp Direct</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      width: 280px;
-      padding: 12px;
-    }
-
-    select, input, button {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      font-size: 14px;
-    }
-
-    button {
-      background-color: #25D366;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h3>WhatsApp Direct</h3>
 
+  <h2>WhatsApp Direct</h2>
+
+  <label>Country</label>
   <select id="country"></select>
 
-  <input type="text" id="phone" placeholder="Enter phone number">
+  <label>Phone Number</label>
+  <input type="tel" id="phone" placeholder="Enter phone number">
 
   <button id="openBtn">Open Chat</button>
+
+  <div id="error"></div>
 
   <script src="countries.js"></script>
   <script src="popup.js"></script>
