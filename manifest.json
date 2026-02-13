@@ -1,11 +1,18 @@
 {
   "manifest_version": 3,
-  "name": "Send with WhatsApp",
+  "name": "Send via Whatsapp",
   "description": "Send WhatsApp message without saving contact",
-  "version": "1.0",
+  "version": "1.1",
   "action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["storage"]
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }
 
