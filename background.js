@@ -1,38 +1,47 @@
-// Create context menu on install
+const MENU_ID = "sendToWhatsApp";
+
+// Create context menu once
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    id: "sendToWhatsApp",
+    id: MENU_ID,
     title: "Send via WhatsApp",
     contexts: ["selection"]
   });
 });
 
-// When user clicks context menu
+// Handle click
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === "sendToWhatsApp") {
+  if (info.menuItemId !== MENU_ID) return;
 
-    let selectedText = info.selectionText;
+  let selectedText = info.selectionText;
+  if (!selectedText) return;
 
-    if (!selectedText) return;
+  // Clean text (allow leading +)
+  selectedText = selectedText.trim().replace(/(?!^\+)\D/g, "");
 
-    // Clean number (allow + at start)
-    selectedText = selectedText.trim().replace(/(?!^\+)\D/g, "");
+  if (!selectedText) return;
 
-    if (!selectedText) return;
+  chrome.storage.local.get(["countryCode"], result => {
 
-    // Remove + if present
-    if (selectedText.startsWith("+")) {
-      selectedText = selectedText.substring(1);
+    let phone = selectedText;
+
+    if (phone.startsWith("+")) {
+      phone = phone.substring(1);
+    } else {
+      const countryCode = result.countryCode || "91";
+
+      if (phone.startsWith("0")) {
+        phone = phone.substring(1);
+      }
+
+      phone = countryCode + phone;
     }
 
-    // Validate length
-    if (!/^\d{6,15}$/.test(selectedText)) {
-      return;
-    }
+    if (!/^\d{6,15}$/.test(phone)) return;
 
-    const url = `https://wa.me/${selectedText}`;
-
+    const url = `https://wa.me/${phone}`;
     chrome.tabs.create({ url });
-  }
+
+  });
 });
 
